@@ -11,7 +11,6 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.Recipe;
 import java.util.Iterator;
 import java.util.Map;
-
 public class InstantSmelt extends JavaPlugin {
 
     private Map<Material, ItemStack> smeltingRecipes;

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/InstantSmelt.iml" filepath="$PROJECT_DIR$/.idea/InstantSmelt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/InstaSmelt-Plugin.iml" filepath="$PROJECT_DIR$/.idea/InstaSmelt-Plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InstantSmelt/InstantSmelt.iml" filepath="$PROJECT_DIR$/InstantSmelt/InstantSmelt.iml" />
     </modules>
   </component>
 </project>
