@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="InstantSmelt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/InstantSmelt_jar</output-path>
+    <root id="archive" name="InstantSmelt.jar">
+      <element id="module-output" name="InstantSmelt" />
+    </root>
+  </artifact>
+</component>

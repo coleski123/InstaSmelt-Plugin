@@ -1,0 +1,14 @@
+name: InstantSmelt
+version: '0.1'
+author: Coleski123
+main: me.coleski123.instantsmelt.InstantSmelt
+api-version: 1.19
+commands:
+  instasmelt:
+    description: Smelts the item in your hand!
+    usage: /<command>
+    alieases: instasmelt
+permissions:
+  instasmelt.use:
+    description: Allows players to use the InstaSmelt command
+    default: false
