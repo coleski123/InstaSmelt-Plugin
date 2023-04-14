@@ -11,4 +11,4 @@ commands:
 permissions:
   instasmelt.use:
     description: Allows players to use the InstaSmelt command
-    default: false
+    default: op
