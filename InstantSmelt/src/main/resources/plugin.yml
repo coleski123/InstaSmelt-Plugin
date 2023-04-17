@@ -6,9 +6,12 @@ api-version: 1.19
 commands:
   instasmelt:
     description: Smelts the item in your hand!
-    usage: /<command>
-    alieases: instasmelt
+  smeltcost:
+    description: Checks the current smelt cost.
 permissions:
   instasmelt.use:
-    description: Allows players to use the InstaSmelt command
+    description: Allows player to use the InstaSmelt command
+    default: op
+  instasmelt.use.smeltcost:
+    description: Allows the player to use the smelt cost command
     default: op
