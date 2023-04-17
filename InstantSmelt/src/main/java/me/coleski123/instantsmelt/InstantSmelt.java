@@ -1,6 +1,7 @@
 package me.coleski123.instantsmelt;
 
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -9,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.inventory.FurnaceRecipe;
@@ -21,7 +23,7 @@ import java.util.Map;
 public class InstantSmelt extends JavaPlugin {
     private Economy econ;
     private Map<Material, ItemStack> smeltingRecipes;
-    private double smeltCost = 20.00;
+    private double smeltCost = 20.75;
     private boolean enableSmeltCost = true;
 
 
@@ -67,7 +69,7 @@ public class InstantSmelt extends JavaPlugin {
         File configFile = new File(getDataFolder(), "config.yml");
         if (configFile.exists()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-            smeltCost = config.getDouble("smeltCost", 20.00);
+            smeltCost = config.getDouble("smeltCost", 20.75);
             enableSmeltCost = config.getBoolean("enableSmeltCost", true);
         }
     }
@@ -87,6 +89,26 @@ public class InstantSmelt extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (command.getName().equalsIgnoreCase("instasmeltreload")) {
+            Player player = (Player) sender;
+            Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("InstantSmelt");
+            // Check if the player has the required permission
+            if (!player.hasPermission("instasmelt.use.reload")) {
+                player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                return true;
+            }
+
+            if (plugin != null) {
+                // Reload the plugin
+                Bukkit.getPluginManager().disablePlugin(plugin);
+                Bukkit.getPluginManager().enablePlugin(plugin);
+                sender.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "InstaSmelt has been reloaded!");
+            } else {
+                sender.sendMessage(ChatColor.RED + "The InstaSmelt plugin could not be found.");
+            }
+            return true;
+        }
 
         if (command.getName().equalsIgnoreCase("smeltcost") && sender instanceof Player) {
             Player player = (Player) sender;
