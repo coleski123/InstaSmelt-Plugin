@@ -4,6 +4,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -171,6 +172,13 @@ public class InstantSmelt extends JavaPlugin {
 
                         //Sets the item in the player's main hand to smelted item.
                         player.getInventory().setItemInMainHand(smeltedItem);
+                        if (itemInHand.getType().isEdible()) {
+                            // Plays smoker sound when a food item is smelted
+                            player.playSound(player.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1, 1);
+                        } else {
+                            // Plays furnace sound when a metal item is smelted
+                            player.playSound(player.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1, 1);
+                        }
                         player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Your " + toFriendlyName(itemInHand.getType()) + " has been smelted into " + toFriendlyName(smeltedItem.getType()) + " and you received " + ChatColor.GREEN + experienceAmount + " XP" + ChatColor.YELLOW + "!");
                         return true;
                     }
