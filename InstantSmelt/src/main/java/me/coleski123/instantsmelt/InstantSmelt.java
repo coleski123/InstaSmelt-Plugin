@@ -43,6 +43,7 @@ public class InstantSmelt extends JavaPlugin {
         getLogger().info(ChatColor.RED + "InstaSmelt has been disabled!");
     }
 
+    //Creates the config.yml and defines the smeltCost/enableSmeltCost
     private void createConfig() {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
@@ -65,6 +66,7 @@ public class InstantSmelt extends JavaPlugin {
         }
     }
 
+    //Loads the config.yml and sets the default values of SmeltCost & EnableSmeltCost
     private void loadConfig() {
         File configFile = new File(getDataFolder(), "config.yml");
         if (configFile.exists()) {
@@ -74,7 +76,7 @@ public class InstantSmelt extends JavaPlugin {
         }
     }
 
-
+    //Vault economy
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -110,6 +112,7 @@ public class InstantSmelt extends JavaPlugin {
             return true;
         }
 
+        //SmeltCost Command
         if (command.getName().equalsIgnoreCase("smeltcost") && sender instanceof Player) {
             Player player = (Player) sender;
             // Check if the player has the required permission
@@ -126,7 +129,7 @@ public class InstantSmelt extends JavaPlugin {
             return false;
         }
 
-
+        //Main instasmelt command
         if (command.getName().equalsIgnoreCase("instasmelt") && sender instanceof Player) {
             Player player = (Player) sender;
 
@@ -136,6 +139,7 @@ public class InstantSmelt extends JavaPlugin {
                 return true;
             }
 
+            //Iterates through all the available recipes in the server and checks if the player's held item matches the input of any FurnaceRecipe
             ItemStack itemInHand = player.getInventory().getItemInMainHand();
             ItemStack smeltedItem = null;
 
@@ -165,6 +169,7 @@ public class InstantSmelt extends JavaPlugin {
                         int experienceAmount = getExperienceAmount(cookingRecipe, stackAmount);
                         player.giveExp(experienceAmount);
 
+                        //Sets the item in the player's main hand to smelted item.
                         player.getInventory().setItemInMainHand(smeltedItem);
                         player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Your " + toFriendlyName(itemInHand.getType()) + " has been smelted into " + toFriendlyName(smeltedItem.getType()) + " and you received " + ChatColor.GREEN + experienceAmount + " XP" + ChatColor.YELLOW + "!");
                         return true;
@@ -178,6 +183,7 @@ public class InstantSmelt extends JavaPlugin {
         return false;
     }
 
+    //Calculates the amount of experience points that a player will receive when smelting an item in a furnace, based on the furnace recipe and the number of items being smelted
     private int getExperienceAmount(FurnaceRecipe recipe, int stackAmount) {
         float experience = recipe.getExperience();
 
