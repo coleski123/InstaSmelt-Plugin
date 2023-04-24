@@ -198,7 +198,7 @@ public class InstantSmelt extends JavaPlugin {
                         //Play the XP orb sound
                         Random random = new Random();
                         float pitch = 0.5f + random.nextFloat();
-                        player.playSound(player.getLocation(), xpSound, 1,pitch);
+                        player.playSound(player.getLocation(), xpSound, 0.6f,pitch);
                         return true;
                     }
                 }
