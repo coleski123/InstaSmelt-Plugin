@@ -6,7 +6,7 @@
 
     <groupId>me.coleski123</groupId>
     <artifactId>InstantSmelt</artifactId>
-    <version>0.1</version>
+    <version>0.7</version>
     <packaging>jar</packaging>
 
     <name>InstantSmelt</name>
