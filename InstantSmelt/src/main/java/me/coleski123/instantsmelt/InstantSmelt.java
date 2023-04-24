@@ -167,7 +167,6 @@ public class InstantSmelt extends JavaPlugin {
 
                         //Orb Pickup Sound
                         Sound xpSound = Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
-
                         //Play the furnace or smoker sound based on the smelted item
                         Sound smeltSound = Sound.BLOCK_FURNACE_FIRE_CRACKLE;
                         if (smeltedItem.getType().isEdible()) {
