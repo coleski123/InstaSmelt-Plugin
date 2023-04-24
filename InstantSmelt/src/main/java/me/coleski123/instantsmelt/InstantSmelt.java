@@ -26,10 +26,17 @@ public class InstantSmelt extends JavaPlugin {
     private double smeltCost = 20.75;
     private boolean enableSmeltCost = true;
 
+    private static InstantSmelt instance;
+
+    public static InstantSmelt getInstance() {
+        return instance;
+    }
+
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        instance = this;
         getLogger().info(ChatColor.GREEN + "InstaSmelt has been enabled!");
         setupEconomy();
         setupEconomy();
@@ -93,6 +100,11 @@ public class InstantSmelt extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (command.getName().equalsIgnoreCase("instasmeltreload")) {
+            // Check if the sender is a player
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "This command can only be executed by a player!");
+                return true;
+            }
             Player player = (Player) sender;
             Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("InstantSmelt");
             // Check if the player has the required permission
@@ -105,12 +117,15 @@ public class InstantSmelt extends JavaPlugin {
                 // Reload the plugin
                 Bukkit.getPluginManager().disablePlugin(plugin);
                 Bukkit.getPluginManager().enablePlugin(plugin);
+                InstantSmelt.getInstance().reloadConfig();
                 sender.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "InstaSmelt has been reloaded!");
             } else {
                 sender.sendMessage(ChatColor.RED + "The InstaSmelt plugin could not be found.");
             }
             return true;
         }
+
+
 
         //SmeltCost Command
         if (command.getName().equalsIgnoreCase("smeltcost") && sender instanceof Player) {
