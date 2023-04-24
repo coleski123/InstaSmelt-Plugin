@@ -27,13 +27,10 @@ public class InstantSmelt extends JavaPlugin {
     private Map<Material, ItemStack> smeltingRecipes;
     private double smeltCost = 20.75;
     private boolean enableSmeltCost = true;
-
     private static InstantSmelt instance;
-
     public static InstantSmelt getInstance() {
         return instance;
     }
-
 
     @Override
     public void onEnable() {
@@ -126,8 +123,6 @@ public class InstantSmelt extends JavaPlugin {
             }
             return true;
         }
-
-
 
         //SmeltCost Command
         if (command.getName().equalsIgnoreCase("smeltcost") && sender instanceof Player) {
@@ -228,11 +223,9 @@ public class InstantSmelt extends JavaPlugin {
             }
             count++;
         }
-
         return experienceAmount;
     }
     private String toFriendlyName(Material material) {
         return material.name().toLowerCase().replace('_', ' ');
     }
-
 }
