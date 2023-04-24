@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 public class InstantSmelt extends JavaPlugin {
     private Economy econ;
@@ -169,6 +170,9 @@ public class InstantSmelt extends JavaPlugin {
                         int stackAmount = itemInHand.getAmount();
                         smeltedItem.setAmount(stackAmount);
 
+                        //Orb Pickup Sound
+                        Sound xpSound = Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
+
                         //Play the furnace or smoker sound based on the smelted item
                         Sound smeltSound = Sound.BLOCK_FURNACE_FIRE_CRACKLE;
                         if (smeltedItem.getType().isEdible()) {
@@ -196,6 +200,10 @@ public class InstantSmelt extends JavaPlugin {
                         player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Your " + toFriendlyName(itemInHand.getType()) + " has been smelted into " + toFriendlyName(smeltedItem.getType()) + " and you received " + ChatColor.GREEN + experienceAmount + " XP" + ChatColor.YELLOW + "!");
                         //Play the smelt sound
                         player.playSound(player.getLocation(), smeltSound, 1, 1);
+                        //Play the XP orb sound
+                        Random random = new Random();
+                        float pitch = 0.5f + random.nextFloat();
+                        player.playSound(player.getLocation(), xpSound, 1,pitch);
                         return true;
                     }
                 }
