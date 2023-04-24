@@ -202,7 +202,7 @@ public class InstantSmelt extends JavaPlugin {
                     }
                 }
             }
-
+            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
             player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "That item cannot be smelted!");
             return false;
         }
