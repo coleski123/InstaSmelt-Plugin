@@ -176,6 +176,7 @@ public class InstantSmelt extends JavaPlugin {
                         // Check if the smelt cost is enabled in the config file
                         boolean enableSmeltCost = getConfig().getBoolean("enableSmeltCost", true);
                         if (enableSmeltCost && econ.getBalance(player) < smeltCost) {
+                            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
                             player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.RED + "You do not have enough money to smelt " + toFriendlyName(itemInHand.getType()));
                             return true;
                         }
