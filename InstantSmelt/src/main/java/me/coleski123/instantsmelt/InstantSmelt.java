@@ -118,7 +118,7 @@ public class InstantSmelt extends JavaPlugin {
                 Bukkit.getPluginManager().enablePlugin(plugin);
                 InstantSmelt.getInstance().reloadConfig();
                 sender.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "InstaSmelt has been reloaded!");
-                //Play Note Sound
+                //Play chime sound when reloaded
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
             } else {
                 sender.sendMessage(ChatColor.RED + "The InstaSmelt plugin could not be found.");
