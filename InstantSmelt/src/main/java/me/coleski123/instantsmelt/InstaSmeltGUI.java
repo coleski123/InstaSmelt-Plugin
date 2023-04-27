@@ -194,6 +194,9 @@ public class InstaSmeltGUI implements Listener {
                 event.getPlayer().sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Smelt cost updated to " + economy.format(newSmeltCost));
                 event.getPlayer().removeMetadata("instasmelt:editing", plugin);
                 openGUI(event.getPlayer());
+
+                //Cancel the chat event to prevent the message from being broadcasted.
+                event.setCancelled(true);
             } catch (NumberFormatException e) {
                 event.getPlayer().sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.RED + "Invalid number format. Please enter a valid number or type 'cancel'.");
             }
