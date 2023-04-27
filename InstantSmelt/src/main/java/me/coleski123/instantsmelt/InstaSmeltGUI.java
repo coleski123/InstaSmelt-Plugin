@@ -111,7 +111,7 @@ public class InstaSmeltGUI implements Listener {
             closeMeta.setDisplayName(ChatColor.RED + "Close Config");
             List<String> closeLore = new ArrayList<>();
             closeLore.add("");
-            closeLore.add(ChatColor.GRAY + "Click to save config");
+            closeLore.add(ChatColor.GRAY + "Click to close config");
             closeMeta.setLore(closeLore);
             closeItem.setItemMeta(closeMeta);
             inventory.setItem(8, closeItem);
