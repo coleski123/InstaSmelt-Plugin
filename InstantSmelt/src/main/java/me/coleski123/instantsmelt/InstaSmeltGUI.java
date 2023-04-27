@@ -64,7 +64,7 @@ public class InstaSmeltGUI implements Listener {
         BukkitRunnable runnable = new BukkitRunnable() {
         @Override
         public void run() {
-        Inventory inventory = Bukkit.createInventory(null, 9, ChatColor.GOLD + "InstaSmelt Config");
+        Inventory inventory = Bukkit.createInventory(null, 9, ChatColor.BLUE + "InstaSmelt Config");
 
             loadConfig();
 

@@ -135,7 +135,7 @@ public class InstantSmelt extends JavaPlugin {
             }
             loadConfig();
             if (enableSmeltCost) {
-                player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "The current smelt cost is " + ChatColor.GREEN + econ.currencyNamePlural() + smeltCost);
+                player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "The current smelt cost is " + ChatColor.GREEN + econ.format(smeltCost));
                 return false;
             }
             else;
@@ -187,7 +187,7 @@ public class InstantSmelt extends JavaPlugin {
                         // Deduct the smelt cost from the player's economy balance if enabled in the config file
                         if (enableSmeltCost) {
                             econ.withdrawPlayer(player, smeltCost);
-                            player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "You have been charged " + ChatColor.GREEN + econ.currencyNamePlural() + smeltCost + " " );
+                            player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "You have been charged " + ChatColor.GREEN + econ.format(smeltCost));
                         }
                         // Get the experience amount and give it to the player
                         int experienceAmount = getExperienceAmount(cookingRecipe, stackAmount);

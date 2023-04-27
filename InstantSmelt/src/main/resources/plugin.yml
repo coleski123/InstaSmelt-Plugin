@@ -6,7 +6,6 @@ api-version: 1.19
 commands:
   instasmelt:
     description: Smelts the item in your hand!
-    usage: /<command>
     aliases: is
   instasmeltcost:
     description: Checks the current smelt cost.
