@@ -1,7 +1,6 @@
 package me.coleski123.instantsmelt;
 
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -31,10 +30,15 @@ public class InstantSmelt extends JavaPlugin {
     public static InstantSmelt getInstance() {
         return instance;
     }
+    private Plugin plugin;
+    private FileConfiguration configFile;
+    private InstaSmeltGUI instaSmeltGUI;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        instaSmeltGUI = new InstaSmeltGUI(this);
+        getServer().getPluginManager().registerEvents(new InstaSmeltGUI(this), this);
         instance = this;
         getLogger().info(ChatColor.GREEN + "InstaSmelt has been enabled!");
         setupEconomy();
@@ -47,6 +51,12 @@ public class InstantSmelt extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         getLogger().info(ChatColor.RED + "InstaSmelt has been disabled!");
+    }
+
+    //Reload the config
+    public void reload() {
+        InstantSmelt.getInstance().reloadConfig();
+        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&eThe config has been reloaded!"));
     }
 
     //Creates the config.yml and defines the smeltCost/enableSmeltCost
@@ -98,31 +108,20 @@ public class InstantSmelt extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (command.getName().equalsIgnoreCase("instasmeltreload")) {
-            // Check if the sender is a player
+        if (command.getName().equalsIgnoreCase("instasmeltconfig")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "This command can only be executed by a player!");
-                return true;
-            }
-            Player player = (Player) sender;
-            Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("InstantSmelt");
-            // Check if the player has the required permission
-            if (!player.hasPermission("instasmelt.use.reload")) {
-                player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                sender.sendMessage(ChatColor.RED + "This command can only be run by a player.");
                 return true;
             }
 
-            if (plugin != null) {
-                // Reload the plugin
-                Bukkit.getPluginManager().disablePlugin(plugin);
-                Bukkit.getPluginManager().enablePlugin(plugin);
-                InstantSmelt.getInstance().reloadConfig();
-                sender.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "InstaSmelt has been reloaded!");
-                //Play chime sound when reloaded
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
-            } else {
-                sender.sendMessage(ChatColor.RED + "The InstaSmelt plugin could not be found.");
+            Player player = (Player) sender;
+            if (!player.hasPermission("instasmelt.use.gui.config")) {
+                player.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                return true;
             }
+
+            // Open the InstaSmeltGUI for the player
+            instaSmeltGUI.openGUI(player);
             return true;
         }
 
@@ -134,6 +133,7 @@ public class InstantSmelt extends JavaPlugin {
                 player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
                 return true;
             }
+            loadConfig();
             if (enableSmeltCost) {
                 player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "The current smelt cost is " + ChatColor.GREEN + econ.currencyNamePlural() + smeltCost);
                 return false;
