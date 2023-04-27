@@ -64,7 +64,7 @@ public class InstaSmeltGUI implements Listener {
         BukkitRunnable runnable = new BukkitRunnable() {
         @Override
         public void run() {
-        Inventory inventory = Bukkit.createInventory(null, 9, ChatColor.YELLOW + "InstaSmelt Config");
+        Inventory inventory = Bukkit.createInventory(null, 9, ChatColor.GOLD + "InstaSmelt Config");
 
             loadConfig();
 
@@ -79,7 +79,7 @@ public class InstaSmeltGUI implements Listener {
         smeltCostLore.add(ChatColor.GRAY + "Click to edit");
         smeltCostMeta.setLore(smeltCostLore);
         smeltCostItem.setItemMeta(smeltCostMeta);
-        inventory.setItem(1, smeltCostItem);
+        inventory.setItem(0, smeltCostItem);
 
         // Add enable smelt cost item
         ItemStack enableSmeltCostItem = new ItemStack(Material.IRON_INGOT);
@@ -92,10 +92,10 @@ public class InstaSmeltGUI implements Listener {
         enableSmeltCostLore.add(ChatColor.GRAY + "Click to toggle");
         enableSmeltCostMeta.setLore(enableSmeltCostLore);
         enableSmeltCostItem.setItemMeta(enableSmeltCostMeta);
-        inventory.setItem(3, enableSmeltCostItem);
+        inventory.setItem(2, enableSmeltCostItem);
 
         //Save Config Item
-            ItemStack reloadItem = new ItemStack(Material.GREEN_WOOL);
+            ItemStack reloadItem = new ItemStack(Material.NETHER_STAR);
             ItemMeta reloadMeta = reloadItem.getItemMeta();
             reloadMeta.setDisplayName(ChatColor.YELLOW + "Save Config");
             List<String> reloadLore = new ArrayList<>();
@@ -104,6 +104,17 @@ public class InstaSmeltGUI implements Listener {
             reloadMeta.setLore(reloadLore);
             reloadItem.setItemMeta(reloadMeta);
             inventory.setItem(7, reloadItem);
+
+            //Close Config Button
+            ItemStack closeItem = new ItemStack(Material.BARRIER);
+            ItemMeta closeMeta = closeItem.getItemMeta();
+            closeMeta.setDisplayName(ChatColor.RED + "Close Config");
+            List<String> closeLore = new ArrayList<>();
+            closeLore.add("");
+            closeLore.add(ChatColor.GRAY + "Click to save config");
+            closeMeta.setLore(closeLore);
+            closeItem.setItemMeta(closeMeta);
+            inventory.setItem(8, closeItem);
 
         player.openInventory(inventory);
     }
@@ -127,7 +138,7 @@ public class InstaSmeltGUI implements Listener {
         }
 
         switch (clickedItem.getType()) {
-            case GREEN_WOOL:
+            case NETHER_STAR:
                 //Reload the plugin/config
                 updateConfig();
                 player.closeInventory();
@@ -136,12 +147,17 @@ public class InstaSmeltGUI implements Listener {
                 player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Config has been saved!");
                 break;
             case NAME_TAG:
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.3f, 1);
                 player.closeInventory();
                 player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Enter the new smelt cost in the chat. Type" + ChatColor.RED + "'cancel'" + ChatColor.YELLOW + "to cancel.");
                 player.setMetadata("instasmelt:editing", new FixedMetadataValue(plugin, new InstaSmeltMetadata(true, "smeltCost")));
-
+                break;
+            case BARRIER:
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.3f, 1);
+                player.closeInventory();
                 break;
             case IRON_INGOT:
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.3f, 1);
                 enableSmeltCost();
                 openGUI(player);
                 break;

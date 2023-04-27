@@ -147,6 +147,7 @@ public class InstantSmelt extends JavaPlugin {
         if (command.getName().equalsIgnoreCase("instasmelt") && sender instanceof Player) {
             Player player = (Player) sender;
 
+            loadConfig();
             // Check if the player has the required permission
             if (!player.hasPermission("instasmelt.use")) {
                 player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
