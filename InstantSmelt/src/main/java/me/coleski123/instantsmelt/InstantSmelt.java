@@ -126,7 +126,7 @@ public class InstantSmelt extends JavaPlugin {
         }
 
         //SmeltCost Command
-        if (command.getName().equalsIgnoreCase("smeltcost") && sender instanceof Player) {
+        if (command.getName().equalsIgnoreCase("instasmeltcost") && sender instanceof Player) {
             Player player = (Player) sender;
             // Check if the player has the required permission
             if (!player.hasPermission("instasmelt.use.smeltcost")) {
