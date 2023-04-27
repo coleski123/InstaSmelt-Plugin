@@ -1,5 +1,5 @@
 name: InstantSmelt
-version: 0.8
+version: 0.9
 author: Coleski123
 main: me.coleski123.instantsmelt.InstantSmelt
 api-version: 1.19
@@ -8,8 +8,6 @@ commands:
     description: Smelts the item in your hand!
   smeltcost:
     description: Checks the current smelt cost.
-  instasmeltreload:
-    description: Reloads the plugin.
   instasmeltconfig:
     description: Opens the config GUI.
 permissions:
@@ -18,9 +16,6 @@ permissions:
     default: op
   instasmelt.use.smeltcost:
     description: Allows the player to use the smelt cost command
-    default: op
-  instasmelt.use.reload:
-    description: Allows the player to reload the plugin
     default: op
   instasmelt.use.gui.config:
     description: Allows the player to open the config GUI.
