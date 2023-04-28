@@ -197,7 +197,7 @@ public class InstantSmelt extends JavaPlugin {
                         player.getInventory().setItemInMainHand(smeltedItem);
                         player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Your " + toFriendlyName(itemInHand.getType()) + " has been smelted into " + toFriendlyName(smeltedItem.getType()) + " and you received " + ChatColor.GREEN + experienceAmount + " XP" + ChatColor.YELLOW + "!");
                         //Play the smelt sound
-                        player.playSound(player.getLocation(), smeltSound, 1, 1);
+                        player.playSound(player.getLocation(), smeltSound, 2, 1);
                         //Play the XP orb sound
                         Random random = new Random();
                         float pitch = 0.5f + random.nextFloat();

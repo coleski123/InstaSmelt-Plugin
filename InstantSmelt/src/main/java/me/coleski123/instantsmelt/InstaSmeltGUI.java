@@ -116,6 +116,17 @@ public class InstaSmeltGUI implements Listener {
             closeItem.setItemMeta(closeMeta);
             inventory.setItem(8, closeItem);
 
+            //PlaceHolder Item
+            ItemStack placeholderItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+            ItemMeta placeholderItemMeta = placeholderItem.getItemMeta();
+            placeholderItemMeta.setDisplayName(ChatColor.RED + "");
+            placeholderItem.setItemMeta(placeholderItemMeta);
+
+            int[] slots = {1, 3, 4, 5, 6}; // the slots where the item will be set
+            for (int slot : slots) {
+                inventory.setItem(slot, placeholderItem);
+            }
+
         player.openInventory(inventory);
     }
     };
