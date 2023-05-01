@@ -28,9 +28,11 @@ public class InstaSmeltGUI implements Listener {
     private Economy economy;
     private double smeltCost;
     private boolean enableSmeltCost;
+
     public InstaSmeltGUI(Plugin plugin) {
         this.plugin = plugin;
         loadConfig();
+        updateConfig();
         economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
     }
 
