@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;d
+import java.util.Random;
 
 public class InstantSmelt extends JavaPlugin {
     private Economy econ;
