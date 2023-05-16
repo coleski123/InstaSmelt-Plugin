@@ -110,13 +110,15 @@ public class InstantSmelt extends JavaPlugin {
 
         if (command.getName().equalsIgnoreCase("instasmeltconfig")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "This command can only be run by a player.");
+                String configcmdFail = getConfig().getConfigurationSection("messages").getString("PlayerOnlyCmd");
+                sender.sendMessage(configcmdFail);
                 return true;
             }
 
             Player player = (Player) sender;
             if (!player.hasPermission("instasmelt.use.gui.config")) {
-                player.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                String noPerm = getConfig().getConfigurationSection("messages").getString("NoPermission");
+                player.sendMessage(noPerm);
                 return true;
             }
 
@@ -130,16 +132,22 @@ public class InstantSmelt extends JavaPlugin {
             Player player = (Player) sender;
             // Check if the player has the required permission
             if (!player.hasPermission("instasmelt.use.smeltcost")) {
-                player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                String noPerm = getConfig().getConfigurationSection("messages").getString("NoPermission");
+                player.sendMessage(noPerm);
                 return true;
             }
             loadConfig();
             if (enableSmeltCost) {
-                player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "The current smelt cost is " + ChatColor.GREEN + econ.format(smeltCost));
+                String instasmeltPrefix = getConfig().getConfigurationSection("messages").getString("Prefix");
+                String smeltCostLanguage = getConfig().getConfigurationSection("messages").getString("SmeltCost");
+                player.sendMessage(instasmeltPrefix + smeltCostLanguage + ChatColor.GREEN + econ.format(smeltCost));
                 return false;
             }
             else;
-            player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "The current smelt cost is " + ChatColor.GREEN + "FREE!");
+            String instasmeltPrefix = getConfig().getConfigurationSection("messages").getString("Prefix");
+            String smeltCostLanguage = getConfig().getConfigurationSection("messages").getString("SmeltCost");
+            String smeltCostLanguageFree = getConfig().getConfigurationSection("messages").getString("SmeltCostFree");
+            player.sendMessage(instasmeltPrefix + smeltCostLanguage + smeltCostLanguageFree);
             return false;
         }
 
@@ -150,7 +158,8 @@ public class InstantSmelt extends JavaPlugin {
             loadConfig();
             // Check if the player has the required permission
             if (!player.hasPermission("instasmelt.use")) {
-                player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                String noPerm = getConfig().getConfigurationSection("messages").getString("NoPermission");
+                player.sendMessage(noPerm);
                 return true;
             }
 
@@ -179,15 +188,23 @@ public class InstantSmelt extends JavaPlugin {
                         // Check if the smelt cost is enabled in the config file
                         boolean enableSmeltCost = getConfig().getBoolean("enableSmeltCost", true);
                         if (enableSmeltCost && econ.getBalance(player) < smeltCost) {
+
+                            String instasmeltPrefix = getConfig().getConfigurationSection("messages").getString("Prefix");
+                            String notenoughMoneyLang = getConfig().getConfigurationSection("messages").getString("NotEnoughMoney");
+
                             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
-                            player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.RED + "You do not have enough money to smelt " + toFriendlyName(itemInHand.getType()));
+                            player.sendMessage(instasmeltPrefix + notenoughMoneyLang + toFriendlyName(itemInHand.getType()));
                             return true;
                         }
 
                         // Deduct the smelt cost from the player's economy balance if enabled in the config file
                         if (enableSmeltCost) {
                             econ.withdrawPlayer(player, smeltCost);
-                            player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "You have been charged " + ChatColor.GREEN + econ.format(smeltCost));
+
+                            String instasmeltPrefix = getConfig().getConfigurationSection("messages").getString("Prefix");
+                            String moneyCharged = getConfig().getConfigurationSection("messages").getString("Charged");
+
+                            player.sendMessage(instasmeltPrefix + moneyCharged + ChatColor.GREEN + econ.format(smeltCost));
                         }
                         // Get the experience amount and give it to the player
                         int experienceAmount = getExperienceAmount(cookingRecipe, stackAmount);
@@ -195,7 +212,12 @@ public class InstantSmelt extends JavaPlugin {
 
                         //Sets the item in the player's main hand to smelted item.
                         player.getInventory().setItemInMainHand(smeltedItem);
-                        player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "Your " + toFriendlyName(itemInHand.getType()) + " has been smelted into " + toFriendlyName(smeltedItem.getType()) + " and you received " + ChatColor.GREEN + experienceAmount + " XP" + ChatColor.YELLOW + "!");
+                        String instasmeltPrefix = getConfig().getConfigurationSection("messages").getString("Prefix");
+                        String youritemlang = getConfig().getConfigurationSection("messages.smelting").getString("Your");
+                        String smeltedintolang = getConfig().getConfigurationSection("messages.smelting").getString("HasBeenSmeltedInto");
+                        String receivedlang = getConfig().getConfigurationSection("messages.smelting").getString("AndYouReceived");
+                        String XPlang = getConfig().getConfigurationSection("messages.smelting").getString("XP");
+                        player.sendMessage(instasmeltPrefix + youritemlang + toFriendlyName(itemInHand.getType()) + smeltedintolang + toFriendlyName(smeltedItem.getType()) + receivedlang + ChatColor.GREEN + experienceAmount + XPlang + ChatColor.YELLOW + "!");
                         //Play the smelt sound
                         player.playSound(player.getLocation(), smeltSound, 2, 1);
                         //Play the XP orb sound
@@ -207,7 +229,9 @@ public class InstantSmelt extends JavaPlugin {
                 }
             }
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
-            player.sendMessage(ChatColor.GOLD + "[InstaSmelt] " + ChatColor.YELLOW + "That item cannot be smelted!");
+            String instasmeltPrefix = getConfig().getConfigurationSection("messages").getString("Prefix");
+            String smeltFail = getConfig().getConfigurationSection("messages.smelting").getString("SmeltFail");
+            player.sendMessage(instasmeltPrefix + smeltFail);
             return false;
         }
         return false;
