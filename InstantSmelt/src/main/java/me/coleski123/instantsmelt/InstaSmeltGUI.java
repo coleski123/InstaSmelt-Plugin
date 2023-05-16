@@ -81,7 +81,6 @@ public class InstaSmeltGUI implements Listener {
         }
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-
         smeltCost = config.getDouble("smeltCost", 20.75);
         enableSmeltCost = config.getBoolean("enableSmeltCost", true);
         instasmeltPrefix = config.getString("messages.Prefix", "§6[InstaSmelt] ");
@@ -277,9 +276,13 @@ public class InstaSmeltGUI implements Listener {
         File configFile = new File(plugin.getDataFolder(), "config.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 
+        config.options().header("PLEASE DO NOT EDIT THE SMELT COST OR ENABLE SMELT COST USE /isconfig FOR THAT...ONCE DONE WITH THE MESSAGES SAVE THIS CONFIG AND RELOAD SERVER!");
+        config.options().copyHeader(true);
         config.set("smeltCost", smeltCost);
         config.set("enableSmeltCost", enableSmeltCost);
+
         config.set("messages.Prefix", instasmeltPrefix);
+
         config.set("messages.NoPermission", nopermissionFail);
         config.set("messages.PlayerOnlyCmd", configcmdFail);
         config.set("messages.SmeltCost", smeltCostMessage);
@@ -291,6 +294,7 @@ public class InstaSmeltGUI implements Listener {
         config.set("messages.smelting.HasBeenSmeltedInto", smelting2);
         config.set("messages.smelting.AndYouReceived", smelting3);
         config.set("messages.smelting.XP", smelting4);
+
         config.set("messages.ConfigGUI.NameTagTitle", configGUI1);
         config.set("messages.ConfigGUI.NameTagValue", configGUI1Value);
         config.set("messages.ConfigGUI.NameTagClickMSG", configGUI1Underscore);
