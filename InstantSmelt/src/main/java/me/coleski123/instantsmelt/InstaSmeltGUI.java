@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InstaSmeltGUI implements Listener {
+    public static boolean instasmeltcurrencyplacement = false;
     private Plugin plugin;
     private Economy economy;
     private double smeltCost;
@@ -34,10 +35,6 @@ public class InstaSmeltGUI implements Listener {
     private String notenoughMoneylang;
     private String moneyChargedlang;
     private String cannotbeSmelted;
-    private String smelting1;
-    private String smelting2;
-    private String smelting3;
-    private String smelting4;
     private String nopermissionFail;
     private String configcmdFail;
     private String configGUI1;
@@ -56,7 +53,10 @@ public class InstaSmeltGUI implements Listener {
     private String configGUIPositiveNumberMSG;
     private String configGUISmeltCostSetToMessage;
     private String configGUIInvalidNumberFormat;
-
+    private String smeltingmessage;
+    private String configGUITitle;
+    public static String instasmeltcurrency;
+//    private boolean instasmeltcurrencyplacement;
     public InstaSmeltGUI(Plugin plugin) {
         this.plugin = plugin;
         loadConfig();
@@ -83,35 +83,34 @@ public class InstaSmeltGUI implements Listener {
         FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
         smeltCost = config.getDouble("smeltCost", 20.75);
         enableSmeltCost = config.getBoolean("enableSmeltCost", true);
-        instasmeltPrefix = config.getString("messages.Prefix", "§6[InstaSmelt] ");
-        nopermissionFail = config.getString("messages.NoPermission", "§cYou do not have permission to use this command!");
-        configcmdFail = config.getString("messages.PlayerOnlyCmd", "§cThis command can only be run by a player.");
-        smeltCostMessage = config.getString("messages.SmeltCost", "§eThe current smelt cost is ");
-        smeltCostMessageFree = config.getString("messages.SmeltCostFree", "§2FREE! ");
-        notenoughMoneylang = config.getString("messages.NotEnoughMoney", "§cYou do not have enough money to smelt ");
-        moneyChargedlang = config.getString("messages.Charged", "§eYou have been charged ");
-        cannotbeSmelted = config.getString("messages.smelting.SmeltFail", "§eThat item cannot be smelted!");
-        smelting1 = config.getString("messages.smelting.Your", "§eYour ");
-        smelting2 = config.getString("messages.smelting.HasBeenSmeltedInto", " §ehas been smelted into ");
-        smelting3 = config.getString("messages.smelting.AndYouReceived", " §eand you received ");
-        smelting4 = config.getString("messages.smelting.XP", "§aXP");
-        configGUI1 = config.getString("messages.ConfigGUI.NameTagTitle", "§eSmelt Cost");
-        configGUI1Value = config.getString("messages.ConfigGUI.NameTagValue", "§fCurrent value: ");
-        configGUI1Underscore = config.getString("messages.ConfigGUI.NameTagClickMSG", "§7Click to edit");
-        configGUI2 = config.getString("messages.ConfigGUI.IronIngotTitle", "§eEnable Smelt Cost");
-        configGUI2Value = config.getString("messages.ConfigGUI.IronIngotValue", "§fCurrent value: ");
-        configGUI2Underscore = config.getString("messages.ConfigGUI.IronIngotClickMSG", "§7Click to toggle");
-        configGUI3 = config.getString("messages.ConfigGUI.NetherStarTitle", "§eSave Config");
-        configGUI3Underscore = config.getString("messages.ConfigGUI.NetherStarClickMSG", "§7Click to save config");
-        configGUI4 = config.getString("messages.ConfigGUI.BarrierTitle", "§cClick to close config");
-        configGUI4Underscore = config.getString("messages.ConfigGUI.BarrierClickMSG", "§7Click to close config");
-        configGUISaveMSG = config.getString("messages.ConfigGUI.ConfigSaveMessage", "§eConfig has been saved!");
-        configGUIeditCostMSG = config.getString("messages.ConfigGUI.EditSmeltCostMessage", "§eEnter the new smelt cost in the chat. Type §c'cancel' §eto cancel.");
-        configGUIeditCostCancelMSG = config.getString("messages.ConfigGUI.CancelEditSmeltCostMessage", "§eSmelt cost editing cancelled.");
-        configGUIPositiveNumberMSG = config.getString("messages.ConfigGUI.SmeltCostPositiveNumberMessage", "§cThe smelt cost must be a positive number.");
-        configGUISmeltCostSetToMessage = config.getString("messages.ConfigGUI.SmeltCostSetToMessage", "§eSmelt cost updated to ");
-        configGUIInvalidNumberFormat = config.getString("messages.ConfigGUI.InvalidNumberFormatMessage", "§cInvalid number format. Please enter a valid number or type 'cancel'.");
-
+        instasmeltcurrency = config.getString("currency", "$");
+        instasmeltcurrencyplacement = config.getBoolean("iscurrencyinfront", true);
+        instasmeltPrefix = config.getString("messages.Prefix", "&6[InstaSmelt] ");
+        nopermissionFail = config.getString("messages.NoPermission", "&cYou do not have permission to use this command!");
+        configcmdFail = config.getString("messages.PlayerOnlyCmd", "&cThis command can only be run by a player.");
+        smeltCostMessage = config.getString("messages.SmeltCost", "&eThe current smelt cost is ");
+        smeltCostMessageFree = config.getString("messages.SmeltCostFree", "&2FREE! ");
+        notenoughMoneylang = config.getString("messages.NotEnoughMoney", "&cYou do not have enough money to smelt ");
+        moneyChargedlang = config.getString("messages.Charged", "&eYou have been charged ");
+        cannotbeSmelted = config.getString("messages.smelting.SmeltFail", "&eThat item cannot be smelted!");
+        smeltingmessage = config.getString("messages.smelting.Smelt-Success", "&eYour {ITEM1} has been smelted into {ITEM2} and you received {XPAMOUNT}XP!");
+        configGUITitle = config.getString("messages.ConfigGUI.GUI Title", "&9InstaSmelt Config");
+        configGUI1 = config.getString("messages.ConfigGUI.NameTagTitle", "&eSmelt Cost");
+        configGUI1Value = config.getString("messages.ConfigGUI.NameTagValue", "&fCurrent value: ");
+        configGUI1Underscore = config.getString("messages.ConfigGUI.NameTagClickMSG", "&7Click to edit");
+        configGUI2 = config.getString("messages.ConfigGUI.IronIngotTitle", "&eEnable Smelt Cost");
+        configGUI2Value = config.getString("messages.ConfigGUI.IronIngotValue", "&fCurrent value: ");
+        configGUI2Underscore = config.getString("messages.ConfigGUI.IronIngotClickMSG", "&7Click to toggle");
+        configGUI3 = config.getString("messages.ConfigGUI.NetherStarTitle", "&eSave Config");
+        configGUI3Underscore = config.getString("messages.ConfigGUI.NetherStarClickMSG", "&7Click to save config");
+        configGUI4 = config.getString("messages.ConfigGUI.BarrierTitle", "&cClick to close config");
+        configGUI4Underscore = config.getString("messages.ConfigGUI.BarrierClickMSG", "&7Click to close config");
+        configGUISaveMSG = config.getString("messages.ConfigGUI.ConfigSaveMessage", "&eConfig has been saved!");
+        configGUIeditCostMSG = config.getString("messages.ConfigGUI.EditSmeltCostMessage", "&eEnter the new smelt cost in the chat. Type &c'cancel' &eto cancel.");
+        configGUIeditCostCancelMSG = config.getString("messages.ConfigGUI.CancelEditSmeltCostMessage", "&eSmelt cost editing cancelled.");
+        configGUIPositiveNumberMSG = config.getString("messages.ConfigGUI.SmeltCostPositiveNumberMessage", "&cThe smelt cost must be a positive number.");
+        configGUISmeltCostSetToMessage = config.getString("messages.ConfigGUI.SmeltCostSetToMessage", "&eSmelt cost updated to ");
+        configGUIInvalidNumberFormat = config.getString("messages.ConfigGUI.InvalidNumberFormatMessage", "&cInvalid number format. Please enter a valid number or type 'cancel'.");
     }
 
     private void enableSmeltCost() {
@@ -122,19 +121,22 @@ public class InstaSmeltGUI implements Listener {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                Inventory inventory = Bukkit.createInventory(null, 9, ChatColor.BLUE + "InstaSmelt Config");
+                Inventory inventory = Bukkit.createInventory(null, 9, configGUITitle.replace("&", "§"));
 
                 loadConfig();
-
                 // Add smelt cost item
                 ItemStack smeltCostItem = new ItemStack(Material.NAME_TAG);
                 ItemMeta smeltCostMeta = smeltCostItem.getItemMeta();
-                smeltCostMeta.setDisplayName(configGUI1);
+                smeltCostMeta.setDisplayName(configGUI1.replace("&", "§"));
                 List<String> smeltCostLore = new ArrayList<>();
                 smeltCostLore.add("");
-                smeltCostLore.add(configGUI1Value + ChatColor.GREEN + economy.format(smeltCost));
+                if (instasmeltcurrencyplacement) {
+                    smeltCostLore.add(configGUI1Value.replace("&", "§") + ChatColor.GREEN + instasmeltcurrency + smeltCost);
+                } else {
+                    smeltCostLore.add(configGUI1Value.replace("&", "§") + ChatColor.GREEN + smeltCost + instasmeltcurrency);
+                }
                 smeltCostLore.add("");
-                smeltCostLore.add(configGUI1Underscore);
+                smeltCostLore.add(configGUI1Underscore.replace("&", "§"));
                 smeltCostMeta.setLore(smeltCostLore);
                 smeltCostItem.setItemMeta(smeltCostMeta);
                 inventory.setItem(0, smeltCostItem);
@@ -142,12 +144,12 @@ public class InstaSmeltGUI implements Listener {
                 // Add enable smelt cost item
                 ItemStack enableSmeltCostItem = new ItemStack(Material.IRON_INGOT);
                 ItemMeta enableSmeltCostMeta = enableSmeltCostItem.getItemMeta();
-                enableSmeltCostMeta.setDisplayName(configGUI2);
+                enableSmeltCostMeta.setDisplayName(configGUI2.replace("&", "§"));
                 List<String> enableSmeltCostLore = new ArrayList<>();
                 enableSmeltCostLore.add("");
-                enableSmeltCostLore.add(configGUI2Value + ChatColor.GREEN + enableSmeltCost);
+                enableSmeltCostLore.add(configGUI2Value.replace("&", "§") + ChatColor.GREEN + enableSmeltCost);
                 enableSmeltCostLore.add("");
-                enableSmeltCostLore.add(configGUI2Underscore);
+                enableSmeltCostLore.add(configGUI2Underscore.replace("&", "§"));
                 enableSmeltCostMeta.setLore(enableSmeltCostLore);
                 enableSmeltCostItem.setItemMeta(enableSmeltCostMeta);
                 inventory.setItem(2, enableSmeltCostItem);
@@ -155,10 +157,10 @@ public class InstaSmeltGUI implements Listener {
                 //Save Config Item
                 ItemStack reloadItem = new ItemStack(Material.NETHER_STAR);
                 ItemMeta reloadMeta = reloadItem.getItemMeta();
-                reloadMeta.setDisplayName(configGUI3);
+                reloadMeta.setDisplayName(configGUI3.replace("&", "§"));
                 List<String> reloadLore = new ArrayList<>();
                 reloadLore.add("");
-                reloadLore.add(configGUI3Underscore);
+                reloadLore.add(configGUI3Underscore.replace("&", "§"));
                 reloadMeta.setLore(reloadLore);
                 reloadItem.setItemMeta(reloadMeta);
                 inventory.setItem(7, reloadItem);
@@ -166,10 +168,10 @@ public class InstaSmeltGUI implements Listener {
                 //Close Config Button
                 ItemStack closeItem = new ItemStack(Material.BARRIER);
                 ItemMeta closeMeta = closeItem.getItemMeta();
-                closeMeta.setDisplayName(configGUI4);
+                closeMeta.setDisplayName(configGUI4.replace("&", "§"));
                 List<String> closeLore = new ArrayList<>();
                 closeLore.add("");
-                closeLore.add(configGUI4Underscore);
+                closeLore.add(configGUI4Underscore.replace("&", "§"));
                 closeMeta.setLore(closeLore);
                 closeItem.setItemMeta(closeMeta);
                 inventory.setItem(8, closeItem);
@@ -213,12 +215,12 @@ public class InstaSmeltGUI implements Listener {
                 player.closeInventory();
                 InstantSmelt.getInstance().reload();
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
-                player.sendMessage(instasmeltPrefix + configGUISaveMSG);
+                player.sendMessage(instasmeltPrefix.replace("&", "§") + configGUISaveMSG.replace("&", "§"));
                 break;
             case NAME_TAG:
                 player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.3f, 1);
                 player.closeInventory();
-                player.sendMessage(instasmeltPrefix + configGUIeditCostMSG);
+                player.sendMessage(instasmeltPrefix.replace("&", "§") + configGUIeditCostMSG.replace("&", "§"));
                 player.setMetadata("instasmelt:editing", new FixedMetadataValue(plugin, new InstaSmeltMetadata(true, "smeltCost")));
                 break;
             case BARRIER:
@@ -246,7 +248,7 @@ public class InstaSmeltGUI implements Listener {
 
         if (metadata.getType().equals("smeltCost")) {
             if (event.getMessage().equalsIgnoreCase("cancel")) {
-                event.getPlayer().sendMessage(instasmeltPrefix + configGUIeditCostCancelMSG);
+                event.getPlayer().sendMessage(instasmeltPrefix.replace("&", "§") + configGUIeditCostCancelMSG.replace("&", "§"));
                 event.getPlayer().removeMetadata("instasmelt:editing", plugin);
                 return;
             }
@@ -254,20 +256,24 @@ public class InstaSmeltGUI implements Listener {
             try {
                 double newSmeltCost = Double.parseDouble(event.getMessage());
                 if (newSmeltCost < 0) {
-                    event.getPlayer().sendMessage(instasmeltPrefix + configGUIPositiveNumberMSG);
+                    event.getPlayer().sendMessage(instasmeltPrefix.replace("&", "§") + configGUIPositiveNumberMSG.replace("&", "§"));
                     return;
                 }
 
                 smeltCost = newSmeltCost;
                 updateConfig();
-                event.getPlayer().sendMessage(instasmeltPrefix + configGUISmeltCostSetToMessage + economy.format(newSmeltCost));
+                if (instasmeltcurrencyplacement) {
+                    event.getPlayer().sendMessage(instasmeltPrefix.replace("&", "§") + configGUISmeltCostSetToMessage.replace("&", "§") + ChatColor.GREEN + instasmeltcurrency + smeltCost);
+                } else {
+                    event.getPlayer().sendMessage(instasmeltPrefix.replace("&", "§") + configGUISmeltCostSetToMessage.replace("&", "§") + ChatColor.GREEN + smeltCost + instasmeltcurrency);
+                }
                 event.getPlayer().removeMetadata("instasmelt:editing", plugin);
                 openGUI(event.getPlayer());
 
                 //Cancel the chat event to prevent the message from being broadcasted.
                 event.setCancelled(true);
             } catch (NumberFormatException e) {
-                event.getPlayer().sendMessage(instasmeltPrefix + configGUIInvalidNumberFormat);
+                event.getPlayer().sendMessage(instasmeltPrefix.replace("&", "§") + configGUIInvalidNumberFormat.replace("&", "§"));
             }
         }
     }
@@ -275,14 +281,13 @@ public class InstaSmeltGUI implements Listener {
     private void updateConfig() {
         File configFile = new File(plugin.getDataFolder(), "config.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-
-        config.options().header("PLEASE DO NOT EDIT THE SMELT COST OR ENABLE SMELT COST USE /isconfig FOR THAT...ONCE DONE WITH THE MESSAGES SAVE THIS CONFIG AND RELOAD SERVER!");
+        config.options().header("PLEASE DO NOT EDIT THE SMELT COST OR ENABLE SMELT COST USE /isconfig FOR THAT...ONCE DONE WITH THE CURRENCY/MESSAGES SAVE THIS CONFIG AND RELOAD SERVER!");
         config.options().copyHeader(true);
         config.set("smeltCost", smeltCost);
         config.set("enableSmeltCost", enableSmeltCost);
-
+        config.set("currency", instasmeltcurrency);
+        config.set("iscurrencyinfront", instasmeltcurrencyplacement);
         config.set("messages.Prefix", instasmeltPrefix);
-
         config.set("messages.NoPermission", nopermissionFail);
         config.set("messages.PlayerOnlyCmd", configcmdFail);
         config.set("messages.SmeltCost", smeltCostMessage);
@@ -290,11 +295,8 @@ public class InstaSmeltGUI implements Listener {
         config.set("messages.NotEnoughMoney", notenoughMoneylang);
         config.set("messages.Charged", moneyChargedlang);
         config.set("messages.smelting.SmeltFail", cannotbeSmelted);
-        config.set("messages.smelting.Your", smelting1);
-        config.set("messages.smelting.HasBeenSmeltedInto", smelting2);
-        config.set("messages.smelting.AndYouReceived", smelting3);
-        config.set("messages.smelting.XP", smelting4);
-
+        config.set("messages.smelting.Smelt-Success", smeltingmessage);
+        config.set("messages.ConfigGUI.GUI Title", configGUITitle);
         config.set("messages.ConfigGUI.NameTagTitle", configGUI1);
         config.set("messages.ConfigGUI.NameTagValue", configGUI1Value);
         config.set("messages.ConfigGUI.NameTagClickMSG", configGUI1Underscore);
