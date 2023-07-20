@@ -6,7 +6,7 @@
 
     <groupId>me.coleski123</groupId>
     <artifactId>InstantSmelt</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <packaging>jar</packaging>
 
     <name>InstantSmelt</name>
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
+            <version>1.7.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
