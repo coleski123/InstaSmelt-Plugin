@@ -47,6 +47,15 @@ public class InstantSmelt extends JavaPlugin {
         setupEconomy();
         createConfig();
         loadConfig();
+
+        new UpdateChecker(this, 109263).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("No new versions available.");
+            } else {
+                getLogger().info("A new version is now available! Download: https://www.spigotmc.org/resources/instasmelt.109263//");
+            }
+        });
+
     }
 
     @Override
