@@ -90,7 +90,7 @@ public class InstaSmeltGUI implements Listener {
         configcmdFail = config.getString("messages.PlayerOnlyCmd", "&cThis command can only be run by a player.");
         smeltCostMessage = config.getString("messages.SmeltCost", "&eThe current smelt cost is ");
         smeltCostMessageFree = config.getString("messages.SmeltCostFree", "&2FREE! ");
-        notenoughMoneylang = config.getString("messages.NotEnoughMoney", "&cYou do not have enough money to smelt ");
+        notenoughMoneylang = config.getString("messages.NotEnoughMoney", "&cYou do not have enough money to smelt &6{ITEMNAME}. &cYou need &2{TOTALAMOUNT}. &cYou Have &2{PLAYERWALLET}");
         moneyChargedlang = config.getString("messages.Charged", "&eYou have been charged ");
         cannotbeSmelted = config.getString("messages.smelting.SmeltFail", "&eThat item cannot be smelted!");
         smeltingmessage = config.getString("messages.smelting.Smelt-Success", "&eYour {ITEM1} has been smelted into {ITEM2} and you received {XPAMOUNT}XP!");
