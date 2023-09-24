@@ -39,6 +39,10 @@ public class InstantSmelt extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         instaSmeltGUI = new InstaSmeltGUI(this);
+
+        int pluginId = 19877; // <-- Replace with the id of your plugin!
+        Metrics metrics = new Metrics(this, pluginId);
+
         getServer().getPluginManager().registerEvents(new InstaSmeltGUI(this), this);
         instance = this;
         getLogger().info(ChatColor.GREEN + "InstaSmelt has been enabled!");

@@ -14,6 +14,6 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_18" default="true" project-jdk-name="18 (2)" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
+    <output url="file://E:/Servers/MC Spigot Dev Server 1.20.1/plugins" />
   </component>
 </project>
