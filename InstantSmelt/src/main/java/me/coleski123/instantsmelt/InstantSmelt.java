@@ -45,7 +45,8 @@ public class InstantSmelt extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new InstaSmeltGUI(this), this);
         instance = this;
-        getLogger().info(ChatColor.GREEN + "InstaSmelt has been enabled!");
+        String pluginConsolePrefix = ChatColor.YELLOW + "[InstaSmelt]";
+        sendConsoleMessage(pluginConsolePrefix + ChatColor.GREEN + " InstaSmelt has been enabled!");
         setupEconomy();
         setupEconomy();
         createConfig();
@@ -53,9 +54,9 @@ public class InstantSmelt extends JavaPlugin {
 
         new UpdateChecker(this, 109263).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
-                getLogger().info("No new versions available.");
+                sendConsoleMessage(pluginConsolePrefix + ChatColor.GREEN + " No new versions available.");
             } else {
-                getLogger().info("A new version is now available! Download: https://www.spigotmc.org/resources/instasmelt.109263//");
+                sendConsoleMessage(pluginConsolePrefix + ChatColor.RED + " A new version is now available! Download: https://www.spigotmc.org/resources/instasmelt.109263//");
             }
         });
 
@@ -64,7 +65,8 @@ public class InstantSmelt extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        getLogger().info(ChatColor.RED + "InstaSmelt has been disabled!");
+        String pluginConsolePrefix = ChatColor.YELLOW + "[InstaSmelt]";
+        sendConsoleMessage(pluginConsolePrefix + ChatColor.RED + " InstaSmelt has been disabled!");
     }
 
     //Reload the config
@@ -484,5 +486,9 @@ public class InstantSmelt extends JavaPlugin {
 
     public String toFriendlyName(Material material) {
         return material.name().toLowerCase().replace('_', ' ');
+    }
+
+    private void sendConsoleMessage(String message) {
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 }
