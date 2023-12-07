@@ -1,5 +1,5 @@
 name: InstantSmelt
-version: 1.0.10
+version: 1.0.11
 author: Coleski123
 main: me.coleski123.instantsmelt.InstantSmelt
 api-version: 1.20
@@ -13,6 +13,9 @@ commands:
   instasmeltconfig:
     description: Opens the config GUI.
     aliases: isconfig
+  instasmelt all:
+    description: Smelts all items of the same value in your inventory.
+    aliases: isall
 permissions:
   instasmelt.use:
     description: Allows player to use the InstaSmelt command

@@ -9,6 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -54,12 +57,13 @@ public class InstantSmelt extends JavaPlugin {
 
         new UpdateChecker(this, 109263).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
+                sendConsoleMessage(pluginConsolePrefix + ChatColor.GREEN + " Checking for updates...");
                 sendConsoleMessage(pluginConsolePrefix + ChatColor.GREEN + " No new versions available.");
             } else {
+                sendConsoleMessage(pluginConsolePrefix + ChatColor.GREEN + " Checking for updates...");
                 sendConsoleMessage(pluginConsolePrefix + ChatColor.RED + " A new version is now available! Download: https://www.spigotmc.org/resources/instasmelt.109263//");
             }
         });
-
     }
 
     @Override
