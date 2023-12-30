@@ -13,9 +13,9 @@ commands:
   instasmeltconfig:
     description: Opens the config GUI.
     aliases: isconfig
-  instasmelt all:
+  instasmeltall:
     description: Smelts all items of the same value in your inventory.
-    aliases: isall
+    aliases: is all
 permissions:
   instasmelt.use:
     description: Allows player to use the InstaSmelt command

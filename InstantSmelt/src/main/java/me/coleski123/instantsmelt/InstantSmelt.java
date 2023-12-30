@@ -239,14 +239,11 @@ public class InstantSmelt extends JavaPlugin {
                             // Calculate the cost for smelting this specific amount of items
                             double totalSmeltCost = smeltCostPerStack * itemsOutsideHand;
 
-
                             if (enableSmeltCost && econ.getBalance(player) < totalSmeltCost) {
 
                                 double remainingBalance = totalSmeltCost * econ.getBalance(player);
                                 String totalBalanceRemaining = Double.toString(totalSmeltCost);
                                 String itemName = toFriendlyName(itemInHands.getType());
-
-
 
                                 notenoughMoneyLang = notenoughMoneyLang.replace("{ITEMNAME}", itemName);
                                 if (InstaSmeltGUI.instasmeltcurrencyplacement) {
