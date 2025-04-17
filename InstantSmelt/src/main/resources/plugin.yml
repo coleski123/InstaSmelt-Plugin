@@ -1,8 +1,8 @@
 name: InstantSmelt
-version: 1.0.12
+version: 1.0.13
 author: Coleski123
 main: me.coleski123.instantsmelt.InstantSmelt
-api-version: 1.20
+api-version: 1.21
 commands:
   instasmelt:
     description: Smelts the item in your hand!
@@ -25,4 +25,7 @@ permissions:
     default: op
   instasmelt.use.gui.config:
     description: Allows the player to open the config GUI.
+    default: op
+  instasmelt.all:
+    description: Allows the player to smell all items of their hand value in their inventory.
     default: op

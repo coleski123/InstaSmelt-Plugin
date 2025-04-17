@@ -204,6 +204,11 @@ public class InstantSmelt extends JavaPlugin {
 
             if (args.length == 1 && args[0].equalsIgnoreCase("all")) {
 
+                if (!player.hasPermission("instasmelt.all")) {
+                    player.sendMessage(noPerm);
+                    return true;
+                }
+
                 ItemStack itemInHands = player.getInventory().getItemInMainHand();
                 ItemStack smeltedItems = null;
 
